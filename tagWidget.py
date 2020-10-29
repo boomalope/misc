@@ -1,11 +1,24 @@
-# Usage: This is a widget that allows you to edit csv files within an output cell of a jupyter notebook, and save the changes to a new csv file. Example drawn from: https://medium.com/@williams.evanpaul/edit-pandas-dataframes-within-jupyterlab-36f129129496
-# 1) import tagWidget (i.e. this .py file) from the current directory
-# 2) from tagWidget import qgrid (contains settings from tagWidget.py)
-# 3) qgrid_df = qgrid.show_grid(df) (displays the dataframe with editable columns within the notebook)
-# 4) call qgrid_df and make edits in any column
-# 5) q = qgrid_df.get_changed_df() (create new df containing the changes made to the dataframe)
-# 6) q.to_csv(...) (save the 'q' table output to a new file)
+# This is a script that allows you to edit csv files within an output cell of a jupyter notebook, and save the changes to a new csv file. 
+# Example drawn from: https://medium.com/@williams.evanpaul/edit-pandas-dataframes-within-jupyterlab-36f129129496
 
+# TO USE THIS SCRIPT IN A NOTEBOOK:
+# 1) import (from cwd) tagWidget.py functions and qgrid: 
+#----> from tagWidget import export_edits, clear_edits, get_current_row, get_edits
+#----> import qgrid
+# 2) with pandas create a dataframe of e.g. tweets you would like to tag:
+#----> import pandas as pd
+#----> df = pd.read_csv(manual_annotation_file.csv) 
+# 3) covert df into qgrid dataframe:
+#----> qgrid_df = qgrid.show_grid(df) 
+# 4) apply  editable cells within the notebook output cell
+#----> qgrid.on(['selection_changed'], get_current_row)
+#----> qgrid.on(['cell_edited'], get_edits)
+# 4) call qgrid_df and click on any cell to edit. Once you've edited a cell and clicked away, ctrl+z will not undo the change made, so be careful when clicking on the cells as not to delete the text you intend to tag
+#----> qgrid_df
+# 5) create new df containing the changes made to the dataframe:
+#----> q = qgrid_df.get_changed_df()
+# 6) save the whole 'q' table output to a new file:
+#----> q.to_csv(...)
 import pandas as pd
 import qgrid
 import ipywidgets as widgets
